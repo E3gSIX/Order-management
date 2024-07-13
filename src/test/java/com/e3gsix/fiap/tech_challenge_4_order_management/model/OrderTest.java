@@ -1,6 +1,10 @@
 package com.e3gsix.fiap.tech_challenge_4_order_management.model;
 
-import org.junit.jupiter.api.Test;
+
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -8,10 +12,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-class OrderTest {
+@RunWith(SpringRunner.class)
+public class OrderTest {
 
     @Test
-    void orderModel_NoArgsConstructor_NullGetters() {
+    public void orderModel_NoArgsConstructor_NullGetters() {
         Order order = new Order();
 
         assertNull(order.getId());
@@ -20,7 +25,7 @@ class OrderTest {
     }
 
     @Test
-    void orderModel_AllArgsConstructor_ValuedGetters() {
+    public void orderModel_AllArgsConstructor_ValuedGetters() {
         Long expectedOrderId = 1L;
         Long expectedCustomerId = 10L;
 
@@ -37,5 +42,32 @@ class OrderTest {
         for (int i = 0; i < order.getItems().size(); i++) {
             assertEquals(expectedItems.get(i), order.getItems().get(i));
         }
+    }
+    @Test(expected = UnsupportedOperationException.class)
+    public void validate_NotValidCustomerId_ShouldThrowUnsupportedOperationException() {
+        Order order = new Order(
+                null,
+                null,
+                List.of(new Item(1L, 1L, BigInteger.TEN))
+        );
+
+        order.validate();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void validate_NotValidItemsList_ShouldThrowUnsupportedOperationException() {
+        Order order = new Order(null, null, null);
+        order.validate();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void validate_NotValidZeroQuantities_ShouldThrowUnsupportedOperationException() {
+        Order order = new Order(
+                null,
+                null,
+                List.of(new Item(1L, 1L, BigInteger.ZERO))
+        );
+
+        order.validate();
     }
 }
