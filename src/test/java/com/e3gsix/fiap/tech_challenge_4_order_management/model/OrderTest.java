@@ -1,7 +1,5 @@
 package com.e3gsix.fiap.tech_challenge_4_order_management.model;
 
-
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
