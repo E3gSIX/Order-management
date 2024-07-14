@@ -1,7 +1,6 @@
 package com.e3gsix.fiap.tech_challenge_4_order_management.service.impl;
 
-
-import com.e3gsix.fiap.tech_challenge_4_order_management.exceptions.NotFoundException;
+import com.e3gsix.fiap.tech_challenge_4_order_management.controller.exception.NotFoundException;
 import com.e3gsix.fiap.tech_challenge_4_order_management.model.Order;
 import com.e3gsix.fiap.tech_challenge_4_order_management.repository.OrderRepository;
 import com.e3gsix.fiap.tech_challenge_4_order_management.service.OrderService;
@@ -30,6 +29,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private NotFoundException createNotFoundOrderException(Long id){
-        return new NotFoundException("Order with ID " + id + " not found.");
+        return new NotFoundException(String.format("Order with ID '%s' not found.", id));
     }
 }
