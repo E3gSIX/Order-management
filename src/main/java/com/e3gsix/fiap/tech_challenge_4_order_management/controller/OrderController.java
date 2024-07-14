@@ -1,44 +1,34 @@
 package com.e3gsix.fiap.tech_challenge_4_order_management.controller;
 
+import com.e3gsix.fiap.tech_challenge_4_order_management.controller.intefaces.IOrderController;
 import com.e3gsix.fiap.tech_challenge_4_order_management.model.Order;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.e3gsix.fiap.tech_challenge_4_order_management.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Tag(
-        name = "Pedidos [OrderController]",
-        description = "Controlador que fornece os serviços de criação e consulta de pedidos."
-)
-public interface OrderController {
-    @Operation(summary = "Criar um pedido.")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "Pedido criado com sucesso.",
-                    content = {
-                            @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
-                    })
-    })
-    ResponseEntity<Order> create(
-            @Parameter(description = "Descrição do pedido a ser criado.") Order order,
-            @Parameter(hidden = true) UriComponentsBuilder uriComponentsBuilder
-    );
+@RestController
+@RequestMapping("/orders")
+@RequiredArgsConstructor
+public class OrderController implements IOrderController {
+    private final OrderService orderService;
 
-    @Operation(summary = "Buscar um pedido pelo ID.")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Pedido encontrado com sucesso.",
-                    content = {
-                            @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))
-                    })
-    })
-    ResponseEntity<Order> findById(@Parameter(description = "Id do pedido a ser consultado.") Long orderId);
+    @PostMapping()
+    @Override
+    public ResponseEntity<Order> create(@RequestBody Order order, UriComponentsBuilder uriComponentsBuilder) {
+        Order createdOrder = this.orderService.create(order);
 
+        var uri = uriComponentsBuilder.path("/orders/{orderId}").buildAndExpand(order.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(createdOrder);
+    }
+
+    @GetMapping("/{orderId}")
+    @Override
+    public ResponseEntity<Order> findById(@PathVariable Long orderId) {
+        Order findedOrder = this.orderService.findById(orderId);
+
+        return ResponseEntity.ok(findedOrder);
+    }
 }
