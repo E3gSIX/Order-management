@@ -1,6 +1,6 @@
 package com.e3gsix.fiap.tech_challenge_4_order_management.service;
 
-import com.e3gsix.fiap.tech_challenge_4_order_management.exceptions.NotFoundException;
+import com.e3gsix.fiap.tech_challenge_4_order_management.controller.exception.NotFoundException;
 import com.e3gsix.fiap.tech_challenge_4_order_management.model.Item;
 import com.e3gsix.fiap.tech_challenge_4_order_management.model.Order;
 import com.e3gsix.fiap.tech_challenge_4_order_management.repository.OrderRepository;
@@ -33,7 +33,7 @@ public class OrderServiceTest {
         Order order = new Order(
                 null,
                 10L,
-                List.of(new Item(1L, 1L, BigInteger.TEN))
+                List.of(new Item(1L, "6694014dd2dfcd550fcfdc07", BigInteger.TEN))
         );
 
         this.orderService.create(order);
