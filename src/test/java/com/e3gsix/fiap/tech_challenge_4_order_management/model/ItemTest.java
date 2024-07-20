@@ -18,8 +18,8 @@ class ItemTest {
 
     @Test
     void itemModel_AllArgsConstructor_ValuedGetters() {
-        Item item = new Item(1L, 1L, BigInteger.TEN);
-        assertEquals(1L, item.getProductId());
+        Item item = new Item(1L, "669bc6709d2a3a79fcef302b", BigInteger.TEN);
+        assertEquals("669bc6709d2a3a79fcef302b", item.getProductId());
         assertEquals(BigInteger.TEN, item.getQuantity());
     }
 }

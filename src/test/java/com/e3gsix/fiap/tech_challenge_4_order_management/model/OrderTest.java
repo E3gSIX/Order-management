@@ -28,8 +28,8 @@ public class OrderTest {
         Long expectedCustomerId = 10L;
 
         List<Item> expectedItems = List.of(
-                new Item(1L, 1L, BigInteger.TEN),
-                new Item(2L, 1L, BigInteger.valueOf(5))
+                new Item(1L, "669bc6709d2a3a79fcef302a", BigInteger.TEN),
+                new Item(2L, "669bc6709d2a3a79fcef302b", BigInteger.valueOf(5))
         );
 
         Order order = new Order(expectedOrderId, expectedCustomerId, expectedItems);
@@ -46,7 +46,7 @@ public class OrderTest {
         Order order = new Order(
                 null,
                 null,
-                List.of(new Item(1L, 1L, BigInteger.TEN))
+                List.of(new Item(1L, "669bc6709d2a3a79fcef302b", BigInteger.TEN))
         );
 
         order.validate();
@@ -63,7 +63,7 @@ public class OrderTest {
         Order order = new Order(
                 null,
                 null,
-                List.of(new Item(1L, 1L, BigInteger.ZERO))
+                List.of(new Item(1L, "669bc6709d2a3a79fcef302b", BigInteger.ZERO))
         );
 
         order.validate();
